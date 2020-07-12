@@ -1,0 +1,16 @@
+{
+    "name": "kawsarahmed/joomshaper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mkawsar",
+            "email": "kawsar.diu888@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "": ["controllers/", "models/", "./"]
+        }
+    }
+}
