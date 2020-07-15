@@ -11,7 +11,7 @@ class FilterController extends BaseController
         if (isset($_POST['style']) != "" && !empty($_POST['style'])) {
             $imageExt = explode('.', $_POST['image']);
             $img_source = 'gallery/' . $_POST['image'];
-            $image_name = 'new-' . rand(1, 100) . '-' . $_POST['image'];
+            $image_name = 'filter-' . rand(1, 100) . '-' . $_POST['image'];
             $target_path = 'gallery/' . $image_name;
             if ($imageExt[1] == 'jpg') {
                 $img = imagecreatefromjpeg($img_source);
@@ -26,6 +26,7 @@ class FilterController extends BaseController
             }
 
             imagedestroy($img);
+            header('Location: ' . '/');
         }
     }
 }
