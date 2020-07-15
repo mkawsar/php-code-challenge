@@ -26,7 +26,7 @@ class UploadController extends BaseController
 
         if (false !== $files) {
             foreach ($files as $file) {
-                if ('.' != $file && '..' != $file) {
+                if ('.' != $file && '..' != $file && $file != '.gitignore') {
                     $output .= '
                                <div class="col-md-2">
                                 <img src="' . $folder_name . $file . '" class="img-thumbnail" width="175" height="175" style="height:175px;" />

@@ -1,0 +1,93 @@
+<?php require '__header.phtml'; ?>
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+        width: 40%;
+    }
+
+    .card:hover {
+        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    }
+</style>
+<?php require '__content.phtml'; ?>
+<?php require '__menu.phtml'; ?>
+<div class="row">
+    <div class="col-md-12">
+        <div class="row space-16">&nbsp;</div>
+        <div class="row">
+            <div class="card">
+                <?php echo '<img src="data:image/jpeg;base64,' . $source . '" alt="Avatar" style="width:100%" id="profileDisplay">' ?>
+                <div class="container">
+                    <h4><b><?php echo $image; ?></b></h4>
+                    <form method="post" action="/filter?image=<?php echo $image; ?>">
+                        <input type="hidden" name="image" value="<?php echo $image; ?>">
+                        <input type="hidden" name="style" id="style">
+                        <input type="submit" name="submit" value="Submit"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 5px;">
+    <div class="col-sm-4">
+        <div class="thumbnail">
+            <div class="caption text-center">
+                <div class="position-relative">
+                    <?php echo '<img src="data:image/png;base64,' . $source . '" style="width:100%;height:100%;"/>'; ?>
+                </div>
+            </div>
+            <div class="caption card-footer text-center">
+                <ul class="list-inline">
+                    <li><i class="people lighter"></i>&nbsp;<?php echo $image; ?></li>
+                    <li></li>
+                    <li>
+                        <div class="radio">
+                            <label><input type="radio" id="original" value="none" name="optradio">Original</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="thumbnail">
+            <div class="caption text-center">
+                <div class="position-relative">
+                    <?php echo '<img src="data:image/jpeg;base64,' . $source . '" style="width:100%;height:100%; filter:grayscale(100%);"/>'; ?>
+                </div>
+            </div>
+            <div class="caption card-footer text-center">
+                <ul class="list-inline">
+                    <li><i class="people lighter"></i>&nbsp;<?php echo $image; ?></li>
+                    <li></li>
+                    <li>
+                        <div class="radio">
+                            <label><input type="radio" value="grayscale" name="optradio">Grayscale</label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php require '__footer.phtml'; ?>
+<script>
+
+    $(document).ready(function () {
+        var imgStyle = '';
+        $('#profile-img').hide();
+        $('input[type="radio"]').click(function () {
+            if ($(this).val() !== 'none') {
+                $('#profileDisplay').css({'filter': $(this).val() + '(100%)'})
+            } else {
+                $('#profileDisplay').css({'filter': $(this).val()})
+            }
+            imgStyle = $(this).val();
+            $('#style').val(imgStyle);
+        });
+    })
+</script>
+<?php require '__end.phtml'; ?>

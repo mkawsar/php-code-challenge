@@ -10,7 +10,7 @@ class HomepageController extends BaseController
         $files = scandir('gallery');
         if (false !== $files) {
             foreach ($files as $file) {
-                if ('.' != $file && '..' != $file) {
+                if ('.' != $file && '..' != $file && $file != '.gitignore') {
                     $imageArray[] = $file;
                 }
             }
