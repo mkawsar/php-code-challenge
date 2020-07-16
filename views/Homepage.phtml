@@ -20,8 +20,9 @@
                                 <li></li>
                                 <?php if (strpos($image, "filter") !== 0): ?>
                                     <li>
-                                        <?php echo '<a href="/filter?image=' . $image . '">Filter</a>'; ?> | <a
-                                                href="">Crop</a> | <a href="">Adjust</a>
+                                        <?php echo '<a href="/filter?image=' . $image . '">Filter</a>'; ?> |
+                                        <?php echo '<a href="/crop?image=' . $image . '">Crop</a>'; ?>
+                                        | <a href="">Adjust</a>
                                     </li>
                                 <?php endif; ?>
                             </ul>

@@ -1,0 +1,80 @@
+<?php require '__header.phtml'; ?>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
+<?php require '__content.phtml'; ?>
+<?php require '__menu.phtml'; ?>
+<div class="row">
+    <div class="col-md-2">&nbsp;</div>
+    <div class="col-md-8">
+        <div class="row space-16">&nbsp;</div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="thumbnail">
+                    <div class="caption text-center">
+                        <div class="position-relative">
+                            <?php echo '<img src="/gallery/' . $image . '" style="width:100%;height:100%;" id="image_demo"/>'; ?>
+                        </div>
+                    </div>
+                    <div class="caption card-footer text-center">
+                        <ul class="list-inline">
+                            <li><i class="people lighter"></i>&nbsp;<?php echo $image; ?></li>
+                            <li></li>
+                            <input type="file" name="insert_image" id="insert_image" accept="image/*"
+                                   style="display: none"/>
+                            <button class="btn btn-success crop_image">Crop & Insert Image</button>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php require '__footer.phtml'; ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $image_crop = $('#image_demo').croppie({
+            enableExif: true,
+            viewport: {
+                width: 200,
+                height: 200,
+                type: 'square' //circle
+            },
+            boundary: {
+                width: 300,
+                height: 300
+            }
+        });
+        $('#insert_image').on('change', function () {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                $image_crop.croppie('bind', {
+                    url: event.target.result
+                }).then(function () {
+                    console.log('jQuery bind complete');
+                });
+            }
+            reader.readAsDataURL(this.files[0]);
+        });
+        $('.crop_image').click(function (event) {
+            event.preventDefault();
+            $image_crop.croppie('result', {
+                type: 'canvas',
+                size: 'viewport'
+            }).then(function (response) {
+                $.ajax({
+                    url: '/crop?image=<?php echo $image;?>',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {"image": response},
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (err) {
+                        window.location.href = '/';
+                    }
+                })
+            });
+        });
+    });
+</script>
+<?php require '__end.phtml'; ?>
